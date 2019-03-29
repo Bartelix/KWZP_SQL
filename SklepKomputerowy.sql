@@ -13,3 +13,6 @@ create table Drukarki(model nvarchar(50) primary key not null, kolor bit not nul
 alter table PC add constraint FK_ProduktyPC foreign key (model) references Produkty(model);
 alter table Laptop add constraint FK_ProduktyLaptop foreign key (model) references Produkty(model);
 alter table Drukarki add constraint FK_ProduktyDrukarka foreign key (model) references Produkty(model);
+
+/* typ drukarki: laser, atrament, ig³owa */
+/* typ w produkty laptop, pc, drukarka */
