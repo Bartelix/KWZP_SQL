@@ -11,35 +11,35 @@ use SklepKomputerowy; /*Prze³¹czenie na œwie¿o stworzon¹ bazê danych*/
 
 /*===Tworzenie tabel===*/
 create table Produkty(
-	producent text not null, 
-	model nvarchar(50) primary key not null, 
+	producent text not null,
+	model nvarchar(50) primary key not null,
 	typ nvarchar(50) not null check(typ in ('pc', 'laptop', 'drukarka'))
 	/*constraint check pozwala na wpisanie do kolumny tylko wartoœci spe³niaj¹cych warunek podany w nawiasach*/
 	);
 
 create table PCs(
-	model nvarchar(50) primary key not null /*constraint FK_ProduktyPC references Produkty(model)*/, 
-	procesor int not null, 
-	ram int not null, 
-	hdd int, 
-	cd int, 
-	ekran int, 
+	model nvarchar(50) primary key not null /*constraint FK_ProduktyPC references Produkty(model)*/,
+	procesor int not null,
+	ram int not null,
+	hdd int,
+	cd int,
+	ekran int,
 	cena money not null
 	);
 
 create table Laptopy(
-	model nvarchar(50) primary key not null /*constraint FK_ProduktyLaptop references Produkty(model)*/, 
-	procesor int not null, 
-	ram int not null, 
-	hdd int, 
-	ekran int not null, 
+	model nvarchar(50) primary key not null /*constraint FK_ProduktyLaptop references Produkty(model)*/,
+	procesor int not null,
+	ram int not null,
+	hdd int,
+	ekran int not null,
 	cena money not null
 	);
 
 create table Drukarki(
-	model nvarchar(50) primary key not null /*constraint FK_ProduktyDrukarka references Produkty(model)*/, 
-	kolor bit not null, 
-	typ nvarchar(50) check(typ in ('laserowa', 'atramentowa', 'ig³owa')) not null, 
+	model nvarchar(50) primary key not null /*constraint FK_ProduktyDrukarka references Produkty(model)*/,
+	kolor bit not null,
+	typ nvarchar(50) check(typ in ('laserowa', 'atramentowa', 'ig³owa')) not null,
 	cena money not null
 	);
 
@@ -97,24 +97,36 @@ insert into Drukarki values('EcoTank L3070', 1, 'atramentowa', 829);
 
 /*Wyswietlanie polaczonych tabel*/
 /*
-select * from Produkty 
+select * from Produkty
 	join Laptopy on Produkty.model = Laptopy.model;
 
-select * from Produkty 
+select * from Produkty
 	join Pcs on Produkty.model = PCs.model;
 
-select * from Produkty 
+select * from Produkty
 	join Drukarki on Produkty.model = Drukarki.model;
 */
 /*Dodanie innych rekordów za pomoc¹ innych skryptów*/
 /*:r pe³na œcie¿ka do skryptu*/
 :r C:\Users\Bart³omiej\Desktop\KWZP_SQL\KWZP_SQL\script_inserts_KWZP_2019_3_30_20_33_37.sql
+:r C:/Users/Bart³omiej/Desktop/KWZP_SQL/KWZP_SQL/script_inserts_KWZP_2019_3_30_21_41_59.sql
+:r C:/Users/Bart³omiej/Desktop/KWZP_SQL/KWZP_SQL/script_inserts_KWZP_2019_3_30_21_44_20.sql
+:r C:/Users/Bart³omiej/Desktop/KWZP_SQL/KWZP_SQL/script_inserts_KWZP_2019_3_30_21_44_25.sql
+:r C:/Users/Bart³omiej/Desktop/KWZP_SQL/KWZP_SQL/script_inserts_KWZP_2019_3_30_21_44_28.sql
+:r C:/Users/Bart³omiej/Desktop/KWZP_SQL/KWZP_SQL/script_inserts_KWZP_2019_3_30_21_44_31.sql
+:r C:/Users/Bart³omiej/Desktop/KWZP_SQL/KWZP_SQL/script_inserts_KWZP_2019_3_30_21_44_33.sql
+:r C:/Users/Bart³omiej/Desktop/KWZP_SQL/KWZP_SQL/script_inserts_KWZP_2019_3_30_21_44_35.sql
+:r C:/Users/Bart³omiej/Desktop/KWZP_SQL/KWZP_SQL/script_inserts_KWZP_2019_3_30_21_44_37.sql
+:r C:/Users/Bart³omiej/Desktop/KWZP_SQL/KWZP_SQL/script_inserts_KWZP_2019_3_30_21_44_40.sql
+:r C:/Users/Bart³omiej/Desktop/KWZP_SQL/KWZP_SQL/script_inserts_KWZP_2019_3_30_21_44_42.sql
+:r C:/Users/Bart³omiej/Desktop/KWZP_SQL/KWZP_SQL/script_inserts_KWZP_2019_3_30_21_44_54.sql
+/*flag*/
 
 /*===POPRAWNOŒÆ ROZWI¥ZAÑ ZADAÑ NIE ZOSTA£A SPRAWDZONA===*/
 /*===Zadanie 1===*/
 /*Podaj numer modelu, procesor oraz wielkoœæ dysku twardego ka¿dego PC, który kosztuje poni¿ej 2000z³*/
 select 'Zadanie 1' [Numer zad], model, procesor, hdd
-from PCs 
+from PCs
 where cena < 2000;
 
 /*===Zadanie 2===*/
@@ -125,7 +137,7 @@ where typ = 'Drukarka';
 
 /*===Zadanie 3===*/
 /*Podaj numer modelu, RAM i wielkoœæ ekranu dla wszystkich laptopów z cen¹ powy¿ej 2000z³*/
-select 'Zadanie 3' [Numer zad], model, ram, ekran 
+select 'Zadanie 3' [Numer zad], model, ram, ekran
 from Laptopy
 where cena > 2000;
 
@@ -137,7 +149,7 @@ where kolor = 1;
 
 /*===Zadanie 5===*/
 /*Podaj numer modelu, procesor i wielkosæ dysku twardego wszystkich PC, które maj¹ prêdkoœæ cd 8x i cenê mniejsz¹ od 2500z³ lub cd 16x i cenê wiêksz¹ od 2500z³*/
-select 'Zadanie 5' [Numer zad], model, procesor, hdd 
+select 'Zadanie 5' [Numer zad], model, procesor, hdd
 from PCs
 where (cd = 8 and cena < 2500) or (cd = 16 and cena > 2500);
 

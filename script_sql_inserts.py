@@ -1,4 +1,4 @@
-import random, linecache, time
+import random, time, fileinput
 
 class SQLInsertsKWZP():
     __numberOfLaptops = 0
@@ -43,7 +43,8 @@ class SQLInsertsKWZP():
             self.generateProductRecord(pos, 'drukarka')
             pos += 1
             printers -= 1
-        with open(f'script_inserts_KWZP_{self.generateTimeToFileName()}.sql', 'a+', encoding = 'utf-8') as f:
+        file_name = f'script_inserts_KWZP_{self.generateTimeToFileName()}.sql'
+        with open(file_name, 'a+', encoding = 'utf-8') as f:
             flag = 0
             while(flag < len(self.__productsToInsert)):
                 f.write(f"insert into Produkty values('{self.__productsToInsert[flag][0]}', '{self.__productsToInsert[flag][1]}', '{self.__productsToInsert[flag][2]}');")
@@ -65,6 +66,11 @@ class SQLInsertsKWZP():
                 if flag + 1 != len(self.__printersToInsert):
                     f.write('\n')
                 flag += 1
+        for line in fileinput.FileInput('SklepKomputerowy.sql', inplace=1):
+            if'/*flag*/' in line:
+                line = line.rstrip()
+                line = line.replace(line, ':r C:/Users/Bartłomiej/Desktop/KWZP_SQL/KWZP_SQL/' + file_name + '\n/*flag*/')
+            print(line.rstrip())
     
     def generateProductRecord(self, pos, type):
         if type is 'laptop':
@@ -106,15 +112,9 @@ class SQLInsertsKWZP():
             return self.__printerManufactures[rnd]
 
     def readModelNamesUsed(self):
-        flagEOF = True
-        lineNumber = 1
-        while(flagEOF):
-            line = linecache.getline('model_names_used.txt', lineNumber)
-            if line == "":
-                flagEOF = False
-            else:
-                self.__modelNamesUsed.append(line.replace('\n', ''))
-                lineNumber += 1
+        with open('model_names_used.txt', 'r') as f:
+            self.__modelNamesUsed = f.readlines()
+            map(lambda str: str.strip('\n'), self.__modelNamesUsed)
     
     def generateModel(self):
         str = "01234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ-"
@@ -138,4 +138,4 @@ class SQLInsertsKWZP():
         t = time.localtime(time.time())
         return f'{t[0]}_{t[1]}_{t[2]}_{t[3]}_{t[4]}_{t[5]}'
 
-obj = SQLInsertsKWZP(10, 10, 10)
+obj = SQLInsertsKWZP(100, 100, 100)
