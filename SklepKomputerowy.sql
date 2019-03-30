@@ -92,3 +92,13 @@ insert into Drukarki values('HL-1223WE', 0, 'laserowa', 419);
 insert into Drukarki values('B412dn', 0, 'laserowa', 529);
 insert into Drukarki values('EcoTank ITS L3050', 1, 'atramentowa', 699);
 insert into Drukarki values('EcoTank L3070', 1, 'atramentowa', 829);
+
+/*Wyswietlanie polaczonych tabel*/
+select * from Produkty 
+	join Laptopy on Produkty.model = Laptopy.model;
+
+select * from Produkty 
+	join Pcs on Produkty.model = PCs.model;
+
+select * from Produkty 
+	join Drukarki on Produkty.model = Drukarki.model;
