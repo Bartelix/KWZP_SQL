@@ -79,11 +79,11 @@ insert into Laptopy values('IdeaPad 320 (80XR0083/UK)', 1700, 1024, 4096, 15, 12
 
 /*===Dodanie rekordów do tabeli PCs===*/
 /*pierwsze 5 ze strony https://www.komputronik.pl/category/5801/komputery-pc.html */
-insert into PCs(model, procesor, ram, hdd, cd, ekran, cena) values('Sensilo CX-610 [N001]', 2800, 8192, 240, null, null, 2449);
-insert into PCs values('Infinity S510 [E001]', 2800, 8192, 240, null, null, 3799);
-insert into PCs values('Infinity S515 [F001]', 3000, 8192, 240, null, null, 3799);
-insert into PCs values('Pro 310 [C010]', 3600, 8192, 240, null, null, 2149);
-insert into PCs values('Pro 500 SFF [I003]', 3000, 8192, 240, null, null, 2499);
+insert into PCs(model, procesor, ram, hdd, cd, ekran, cena) values('Sensilo CX-610 [N001]', 2800, 8192, 240, 4, 17, 2449);
+insert into PCs values('Infinity S510 [E001]', 2800, 8192, 240, 8, 15, 3799);
+insert into PCs values('Infinity S515 [F001]', 3000, 8192, 240, 8, 15, 3799);
+insert into PCs values('Pro 310 [C010]', 3600, 8192, 240, 16, 17, 2149);
+insert into PCs values('Pro 500 SFF [I003]', 3000, 8192, 240, 4, 17, 2499);
 
 /*===Dodanie rekordów do tabeli Drukarki===*/
 /*z tej strony https://www.komputronik.pl/informacje/dobra-drukarka-dla-ucznia-co-wybrac-top-5/ */
@@ -102,3 +102,91 @@ select * from Produkty
 
 select * from Produkty 
 	join Drukarki on Produkty.model = Drukarki.model;
+
+
+/*===POPRAWNOŒÆ ROZWI¥ZAÑ ZADAÑ NIE ZOSTA£A SPRAWDZONA===*/
+/*===Zadanie 1===*/
+/*Podaj numer modelu, procesor oraz wielkoœæ dysku twardego ka¿dego PC, który kosztuje poni¿ej 2000z³*/
+select model, procesor, hdd 
+from PCs 
+where cena < 2000;
+
+/*===Zadanie 2===*/
+/*Podaj producentów drukarek*/
+select producent 
+from Produkty
+where typ = 'Drukarka';
+
+/*===Zadanie 3===*/
+/*Podaj numer modelu, RAM i wielkoœæ ekranu dla wszystkich laptopów z cen¹ powy¿ej 2000z³*/
+select model, ram, ekran 
+from Laptopy
+where cena > 2000;
+
+/*===Zadanie 4===*/
+/*Podaj wszystkie dane kolorowych drukarek*/
+select *
+from Drukarki
+where kolor = 1;
+
+/*===Zadanie 5===*/
+/*Podaj numer modelu, procesor i wielkosæ dysku twardego wszystkich PC, które maj¹ prêdkoœæ cd 8x i cenê mniejsz¹ od 2500z³ lub cd 16x i cenê wiêksz¹ od 2500z³*/
+select model, procesor, hdd 
+from PCs
+where (cd = 8 and cena < 2500) or (cd = 16 and cena > 2500);
+
+/*===Zadanie 6===*/
+/*Wska¿ producenta i prêdkoœæ procesora laptopów, które maj¹ dyski twarde wiêksze b¹dŸ równe 500Gb===*/
+select Prod.producent, Lap.procesor
+from Produkty Prod
+join Laptopy Lap
+on Prod.model = Lap.model
+where Lap.hdd >= 500;
+
+/*===Zadanie 7===*/
+/*Podaj producentów PC, które maj¹ prêdkoœæ procesorów nie mniejsz¹ ni¿ 3500MHz*/
+select Prod.producent
+from Produkty Prod
+join PCs
+on Prod.model = PCs.model
+where PCs.procesor >= 3500;
+
+
+/*===Zadanie 8===*/
+/*Podaj modele drukarek z najwy¿sz¹ cen¹. (tylko jedna wartoœæ ceny)*/
+select model
+from Drukarki
+where cena = (select max(cena) from Drukarki);
+
+/*===Zadanie 9===*/
+/*Podaj œredni¹ prêdkoœæ procesorów PC*/
+select avg(procesor)
+from PCs;
+
+/*===Zadanie 10===*/
+/*Podaj œredni¹ prêdkoœæ procesorów PC, które kosztuj¹ powy¿ej 3500z³*/
+select avg(procesor)
+from PCs
+where cena > 3500;
+
+/*===Zadanie 11===*/
+/*Podaj œredni¹ prêdkoœæ procesorów PC wyprodukowanych przez firmê "DELL"*/
+select avg(PCs.procesor)
+from Produkty Prod
+join PCs
+on Prod.model = PCs.model
+where Prod.producent = 'DELL';
+
+/*===Zadanie 12===*/
+/*Dla ka¿dej z wartoœci prêdkoœci procesora podaj œredni¹ cenê PC*/
+select avg(cena)
+from PCs
+group by procesor;
+
+/*===Zadanie 13===*/
+/*Dla ka¿dego z producentów podaj œredni rozmiar ekranu w laptopie produkowanym przez niego*/
+select avg(Lap.ekran)
+from Produkty Prod
+join Laptopy Lap
+on Prod.model = Lap.model
+group by Prod.producent;
