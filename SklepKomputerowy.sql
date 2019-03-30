@@ -57,9 +57,10 @@ insert into Produkty values('Dream Machines', 'RX2080-17PL18', 'laptop');
 insert into Produkty values('Lenovo', 'V330-15IKB (81AX00H6US)', 'laptop');
 insert into Produkty values('Lenovo', 'IdeaPad 320 (80XR0083/UK)', 'laptop');
 /*===5 PCs===*/
-insert into Produkty values('Komputronik', 'Sensilo CX-610 [N001]', 'pc');
-insert into Produkty values('Komputronik', 'Infinity S510 [E001]', 'pc');
-insert into Produkty values('Komputronik', 'Infinity S515 [F001]', 'pc');
+/*Zmiana producentów na losowych bo jedno z zadañ tego wymaga*/
+insert into Produkty values('DELL', 'Sensilo CX-610 [N001]', 'pc');
+insert into Produkty values('DELL', 'Infinity S510 [E001]', 'pc');
+insert into Produkty values('HP', 'Infinity S515 [F001]', 'pc');
 insert into Produkty values('Komputronik', 'Pro 310 [C010]', 'pc');
 insert into Produkty values('Komputronik', 'Pro 500 SFF [I003]', 'pc');
 /*===5 drukarek===*/
@@ -79,6 +80,7 @@ insert into Laptopy values('IdeaPad 320 (80XR0083/UK)', 1700, 1024, 4096, 15, 12
 
 /*===Dodanie rekordów do tabeli PCs===*/
 /*pierwsze 5 ze strony https://www.komputronik.pl/category/5801/komputery-pc.html */
+/*Dodanie prêdkoœci napêdu i rozmiaru ekranu bo zadania tego wymagaj¹*/
 insert into PCs(model, procesor, ram, hdd, cd, ekran, cena) values('Sensilo CX-610 [N001]', 2800, 8192, 240, 4, 17, 2449);
 insert into PCs values('Infinity S510 [E001]', 2800, 8192, 240, 8, 15, 3799);
 insert into PCs values('Infinity S515 [F001]', 3000, 8192, 240, 8, 15, 3799);
