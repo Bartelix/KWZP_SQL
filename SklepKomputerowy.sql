@@ -96,6 +96,7 @@ insert into Drukarki values('EcoTank ITS L3050', 1, 'atramentowa', 699);
 insert into Drukarki values('EcoTank L3070', 1, 'atramentowa', 829);
 
 /*Wyswietlanie polaczonych tabel*/
+/*
 select * from Produkty 
 	join Laptopy on Produkty.model = Laptopy.model;
 
@@ -104,7 +105,10 @@ select * from Produkty
 
 select * from Produkty 
 	join Drukarki on Produkty.model = Drukarki.model;
-
+*/
+/*Dodanie innych rekordów za pomoc¹ innych skryptów*/
+/*:r pe³na œcie¿ka do skryptu*/
+:r C:\Users\Bart³omiej\Desktop\KWZP_SQL\KWZP_SQL\script_inserts_KWZP_2019_3_30_20_33_37.sql
 
 /*===POPRAWNOŒÆ ROZWI¥ZAÑ ZADAÑ NIE ZOSTA£A SPRAWDZONA===*/
 /*===Zadanie 1===*/
@@ -181,7 +185,7 @@ where Prod.producent like('DELL');
 
 /*===Zadanie 12===*/
 /*Dla ka¿dej z wartoœci prêdkoœci procesora podaj œredni¹ cenê PC*/
-select 'Zadanie 12' [Numer zad], avg(cena) as [Œrednia cena PC]
+select 'Zadanie 12' [Numer zad], round(avg(cena),2) as [Œrednia cena PC]
 from PCs
 group by procesor;
 

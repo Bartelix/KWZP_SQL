@@ -43,25 +43,25 @@ class SQLInsertsKWZP():
             self.generateProductRecord(pos, 'drukarka')
             pos += 1
             printers -= 1
-        with open(f'script_inserts_KWZP_{self.generateTimeToFileName()}.sql', 'a+') as f:
+        with open(f'script_inserts_KWZP_{self.generateTimeToFileName()}.sql', 'a+', encoding = 'utf-8') as f:
             flag = 0
             while(flag < len(self.__productsToInsert)):
-                f.write(f'insert into Produkty values({self.__productsToInsert[flag][0]}, {self.__productsToInsert[flag][1]}, {self.__productsToInsert[flag][2]});')
+                f.write(f"insert into Produkty values('{self.__productsToInsert[flag][0]}', '{self.__productsToInsert[flag][1]}', '{self.__productsToInsert[flag][2]}');")
                 f.write('\n')
                 flag += 1
             flag = 0
             while(flag < len(self.__laptopsToInsert)):
-                f.write(f'insert into Laptopy values({self.__laptopsToInsert[flag][0]}, {self.__laptopsToInsert[flag][1]},{self.__laptopsToInsert[flag][2]}, {self.__laptopsToInsert[flag][3]}, {self.__laptopsToInsert[flag][4]}, {self.__laptopsToInsert[flag][5]});')
+                f.write(f"insert into Laptopy values('{self.__laptopsToInsert[flag][0]}', {self.__laptopsToInsert[flag][1]},{self.__laptopsToInsert[flag][2]}, {self.__laptopsToInsert[flag][3]}, {self.__laptopsToInsert[flag][4]}, {self.__laptopsToInsert[flag][5]});")
                 f.write('\n')
                 flag += 1
             flag = 0
             while(flag < len(self.__PCsToInsert)):
-                f.write(f'insert into PCs values({self.__PCsToInsert[flag][0]}, {self.__PCsToInsert[flag][1]},{self.__PCsToInsert[flag][2]}, {self.__PCsToInsert[flag][3]}, {self.__PCsToInsert[flag][4]}, {self.__PCsToInsert[flag][5]}, {self.__PCsToInsert[flag][6]});')
+                f.write(f"insert into PCs values('{self.__PCsToInsert[flag][0]}', {self.__PCsToInsert[flag][1]},{self.__PCsToInsert[flag][2]}, {self.__PCsToInsert[flag][3]}, {self.__PCsToInsert[flag][4]}, {self.__PCsToInsert[flag][5]}, {self.__PCsToInsert[flag][6]});")
                 f.write('\n')
                 flag += 1
             flag = 0
             while(flag < len(self.__printersToInsert)):
-                f.write(f'insert into Drukarki values({self.__printersToInsert[flag][0]}, {self.__printersToInsert[flag][1]}, {self.__printersToInsert[flag][2]}, {self.__printersToInsert[flag][3]});')
+                f.write(f"insert into Drukarki values('{self.__printersToInsert[flag][0]}', {self.__printersToInsert[flag][1]}, '{self.__printersToInsert[flag][2]}', {self.__printersToInsert[flag][3]});")
                 if flag + 1 != len(self.__printersToInsert):
                     f.write('\n')
                 flag += 1
