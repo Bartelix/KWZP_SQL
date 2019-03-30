@@ -109,46 +109,46 @@ select * from Produkty
 /*===POPRAWNOŒÆ ROZWI¥ZAÑ ZADAÑ NIE ZOSTA£A SPRAWDZONA===*/
 /*===Zadanie 1===*/
 /*Podaj numer modelu, procesor oraz wielkoœæ dysku twardego ka¿dego PC, który kosztuje poni¿ej 2000z³*/
-select model, procesor, hdd 
+select 'Zadanie 1', model, procesor, hdd
 from PCs 
 where cena < 2000;
 
 /*===Zadanie 2===*/
 /*Podaj producentów drukarek*/
-select producent 
+select 'Zadanie 2', producent 
 from Produkty
 where typ = 'Drukarka';
 
 /*===Zadanie 3===*/
 /*Podaj numer modelu, RAM i wielkoœæ ekranu dla wszystkich laptopów z cen¹ powy¿ej 2000z³*/
-select model, ram, ekran 
+select 'Zadanie 3', model, ram, ekran 
 from Laptopy
 where cena > 2000;
 
 /*===Zadanie 4===*/
 /*Podaj wszystkie dane kolorowych drukarek*/
-select *
+select 'Zadanie 4', *
 from Drukarki
 where kolor = 1;
 
 /*===Zadanie 5===*/
 /*Podaj numer modelu, procesor i wielkosæ dysku twardego wszystkich PC, które maj¹ prêdkoœæ cd 8x i cenê mniejsz¹ od 2500z³ lub cd 16x i cenê wiêksz¹ od 2500z³*/
-select model, procesor, hdd 
+select 'Zadanie 5', model, procesor, hdd 
 from PCs
 where (cd = 8 and cena < 2500) or (cd = 16 and cena > 2500);
 
 /*===Zadanie 6===*/
 /*Wska¿ producenta i prêdkoœæ procesora laptopów, które maj¹ dyski twarde wiêksze b¹dŸ równe 500Gb===*/
-select Prod.producent, Lap.procesor
-from Produkty Prod
-join Laptopy Lap
+select 'Zadanie 6', Prod.producent, Lap.procesor
+from Produkty as Prod
+join Laptopy as Lap
 on Prod.model = Lap.model
 where Lap.hdd >= 500;
 
 /*===Zadanie 7===*/
 /*Podaj producentów PC, które maj¹ prêdkoœæ procesorów nie mniejsz¹ ni¿ 3500MHz*/
-select Prod.producent
-from Produkty Prod
+select 'Zadanie 7', Prod.producent
+from Produkty as Prod
 join PCs
 on Prod.model = PCs.model
 where PCs.procesor >= 3500;
@@ -156,39 +156,39 @@ where PCs.procesor >= 3500;
 
 /*===Zadanie 8===*/
 /*Podaj modele drukarek z najwy¿sz¹ cen¹. (tylko jedna wartoœæ ceny)*/
-select model
+select 'Zadanie 8', model
 from Drukarki
 where cena = (select max(cena) from Drukarki);
 
 /*===Zadanie 9===*/
 /*Podaj œredni¹ prêdkoœæ procesorów PC*/
-select avg(procesor)
+select 'Zadanie 9', avg(procesor) as [Œrednia prêdkoœæ procesora]
 from PCs;
 
 /*===Zadanie 10===*/
 /*Podaj œredni¹ prêdkoœæ procesorów PC, które kosztuj¹ powy¿ej 3500z³*/
-select avg(procesor)
+select 'Zadanie 10', avg(procesor) as [Œrednia prêdkoœæ procesora]
 from PCs
 where cena > 3500;
 
 /*===Zadanie 11===*/
 /*Podaj œredni¹ prêdkoœæ procesorów PC wyprodukowanych przez firmê "DELL"*/
-select avg(PCs.procesor)
-from Produkty Prod
+select 'Zadanie 11', avg(PCs.procesor) as [Œrednia prêdkoœæ procesora]
+from Produkty as Prod
 join PCs
 on Prod.model = PCs.model
 where Prod.producent = 'DELL';
 
 /*===Zadanie 12===*/
 /*Dla ka¿dej z wartoœci prêdkoœci procesora podaj œredni¹ cenê PC*/
-select avg(cena)
+select 'Zadanie 12', avg(cena) as [Œrednia cena PC]
 from PCs
 group by procesor;
 
 /*===Zadanie 13===*/
 /*Dla ka¿dego z producentów podaj œredni rozmiar ekranu w laptopie produkowanym przez niego*/
-select avg(Lap.ekran)
-from Produkty Prod
-join Laptopy Lap
+select 'Zadanie 13', avg(Lap.ekran) as [Œrednia wielkoœæ ekranu]
+from Produkty as Prod
+join Laptopy as Lap
 on Prod.model = Lap.model
 group by Prod.producent;
