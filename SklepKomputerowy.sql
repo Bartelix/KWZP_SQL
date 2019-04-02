@@ -11,7 +11,7 @@ use SklepKomputerowy; /*Prze³¹czenie na œwie¿o stworzon¹ bazê danych*/
 
 /*===Tworzenie tabel===*/
 create table Produkty(
-	producent text not null,
+	producent varchar(50) not null,
 	model nvarchar(50) primary key not null,
 	typ nvarchar(50) not null check(typ in ('pc', 'laptop', 'drukarka'))
 	/*constraint check pozwala na wpisanie do kolumny tylko wartoœci spe³niaj¹cych warunek podany w nawiasach*/
@@ -69,6 +69,7 @@ insert into Produkty values('Brother', 'HL-1223WE', 'drukarka');
 insert into Produkty values('OKI', 'B412dn', 'drukarka');
 insert into Produkty values('EPSON', 'EcoTank ITS L3050', 'drukarka');
 insert into Produkty values('EPSON', 'EcoTank L3070', 'drukarka');
+insert into Produkty values('EPSON', 'EcoTank 070', 'drukarka');
 
 /*===Dodanie rekordów do tabeli Laptopy===*/
 /*pierwsze 5 ze strony https://www.morele.net/laptopy/laptopy/notebooki-laptopy-ultrabooki-31/ */
@@ -94,44 +95,24 @@ insert into Drukarki values('HL-1223WE', 0, 'laserowa', 419);
 insert into Drukarki values('B412dn', 0, 'laserowa', 529);
 insert into Drukarki values('EcoTank ITS L3050', 1, 'atramentowa', 699);
 insert into Drukarki values('EcoTank L3070', 1, 'atramentowa', 829);
+insert into Drukarki values('EcoTank 070', 1, 'atramentowa', 829);
 
-/*Wyswietlanie polaczonych tabel*/
 /*
-select * from Produkty
-	join Laptopy on Produkty.model = Laptopy.model;
-
-select * from Produkty
-	join Pcs on Produkty.model = PCs.model;
-
-select * from Produkty
-	join Drukarki on Produkty.model = Drukarki.model;
-*/
 /*Dodanie innych rekordów za pomoc¹ innych skryptów*/
 /*:r pe³na œcie¿ka do skryptu*/
-:r C:\Users\Bart³omiej\Desktop\KWZP_SQL\KWZP_SQL\script_inserts_KWZP_2019_3_30_20_33_37.sql
-:r C:/Users/Bart³omiej/Desktop/KWZP_SQL/KWZP_SQL/script_inserts_KWZP_2019_3_30_21_41_59.sql
-:r C:/Users/Bart³omiej/Desktop/KWZP_SQL/KWZP_SQL/script_inserts_KWZP_2019_3_30_21_44_20.sql
-:r C:/Users/Bart³omiej/Desktop/KWZP_SQL/KWZP_SQL/script_inserts_KWZP_2019_3_30_21_44_25.sql
-:r C:/Users/Bart³omiej/Desktop/KWZP_SQL/KWZP_SQL/script_inserts_KWZP_2019_3_30_21_44_28.sql
-:r C:/Users/Bart³omiej/Desktop/KWZP_SQL/KWZP_SQL/script_inserts_KWZP_2019_3_30_21_44_31.sql
-:r C:/Users/Bart³omiej/Desktop/KWZP_SQL/KWZP_SQL/script_inserts_KWZP_2019_3_30_21_44_33.sql
-:r C:/Users/Bart³omiej/Desktop/KWZP_SQL/KWZP_SQL/script_inserts_KWZP_2019_3_30_21_44_35.sql
-:r C:/Users/Bart³omiej/Desktop/KWZP_SQL/KWZP_SQL/script_inserts_KWZP_2019_3_30_21_44_37.sql
-:r C:/Users/Bart³omiej/Desktop/KWZP_SQL/KWZP_SQL/script_inserts_KWZP_2019_3_30_21_44_40.sql
-:r C:/Users/Bart³omiej/Desktop/KWZP_SQL/KWZP_SQL/script_inserts_KWZP_2019_3_30_21_44_42.sql
-:r C:/Users/Bart³omiej/Desktop/KWZP_SQL/KWZP_SQL/script_inserts_KWZP_2019_3_30_21_44_54.sql
+:r C:/Users/Bart³omiej/Desktop/KWZP_SQL/KWZP_SQL/script_inserts_KWZP_2019_4_2_17_5_42.sql
 /*flag*/
 
 /*===POPRAWNOŒÆ ROZWI¥ZAÑ ZADAÑ NIE ZOSTA£A SPRAWDZONA===*/
 /*===Zadanie 1===*/
 /*Podaj numer modelu, procesor oraz wielkoœæ dysku twardego ka¿dego PC, który kosztuje poni¿ej 2000z³*/
-select 'Zadanie 1' [Numer zad], model, procesor, hdd
+select 'Zadanie 1' as 'Numer zad', model, procesor, hdd
 from PCs
 where cena < 2000;
 
 /*===Zadanie 2===*/
 /*Podaj producentów drukarek*/
-select distinct 'Zadanie 2' [Numer zad], cast(producent as varchar(50))
+select distinct 'Zadanie 2' [Numer zad], producent
 from Produkty
 where typ = 'Drukarka';
 
@@ -143,7 +124,7 @@ where cena > 2000;
 
 /*===Zadanie 4===*/
 /*Podaj wszystkie dane kolorowych drukarek*/
-select 'Zadanie 4' [Numer zad], */*, case kolor when 1 then 'true' else 'false' end as kolor*/
+select 'Zadanie 4' [Numer zad], *
 from Drukarki
 where kolor = 1;
 
@@ -203,8 +184,79 @@ group by procesor;
 
 /*===Zadanie 13===*/
 /*Dla ka¿dego z producentów podaj œredni rozmiar ekranu w laptopie produkowanym przez niego*/
-select 'Zadanie 13' [Numer zad], avg(Lap.ekran) as [Œrednia wielkoœæ ekranu]
+select 'Zadanie 13' [Numer zad], Prod.producent, avg(Lap.ekran) as [Œrednia wielkoœæ ekranu]
 from Produkty as Prod
 join Laptopy as Lap
 on Prod.model = Lap.model
-group by cast(Prod.producent as varchar(50));
+group by Prod.producent
+order by Prod.producent;
+
+/* nazwa firmy ktora kupila, ila ma zaplacic w sumie, data zamowienia, data realizacji inna,
+ */
+
+ create table Firma(
+	nazwaFirmy nvarchar(50) primary key not null
+	);
+
+create table Zamowienia(
+	idZamowienia int identity(1,1) not null primary key,
+	nazwaFirmy nvarchar(50) constraint FK_FirmaZamowienia references Firma(nazwaFirmy) not null,
+	model nvarchar(50) constraint FK_ProduktyZamowienia references Produkty(model) not null,
+	ilosc int not null
+	);
+
+insert into Firma values ('KomPol');
+insert into Firma values ('LapPol');
+insert into Firma values ('DrukPol');
+insert into Firma values ('JanPol');
+insert into Firma values ('PolPol');
+insert into Firma values ('PoleOle');
+insert into Firma values ('StyropJan');
+
+:r C:/Users/Bart³omiej/Desktop/KWZP_SQL/KWZP_SQL/insert_zamowienia.sql
+
+select * from Zamowienia;
+
+/*odp na pytania
+1 firma ktora zlozyla najwiecej zamowien
+2 firma ktora zlozyla zamowienie na najwieksza kwote
+3 ile trwa sredni czas realizacji zamowienai
+4 o ile dluzszy jest najdluzszy czas realizacji od sredniego czasu realizacji
+5 jaki model pc laptopa drukarki jest najczesciej zamawiany w historii
+6 jaki model pc laptopa druakrki jest zamawiany w danym miesiacu
+*/
+
+/*1 firma ktora zlozyla najwiecej zamowien*/
+select top (1) nazwaFirmy, count(nazwaFirmy) as [Najwiêcej zamówieñ] 
+from Zamowienia 
+group by nazwaFirmy
+order by [Najwiêcej zamówieñ] desc;
+
+/*2 firma ktora zlozyla zamowienie na najwieksza kwote*/
+select Zam.nazwaFirmy, Lap.cena as [cena detal.], (Zam.ilosc * Lap.cena) as [cena zam.], 'Laptop' as [Przedmiot zamówienia]
+from Zamowienia as Zam
+join Laptopy as Lap
+on Zam.model = Lap.model
+union
+select Zam.nazwaFirmy, PCs.cena as [cena detal.], (Zam.ilosc * PCs.cena) as [cena zam.], 'Pc' as [Przedmiot zamówienia]
+from Zamowienia as Zam
+join PCs
+on Zam.model = PCs.model
+union
+select Zam.nazwaFirmy, Druk.cena as [cena detal.], (Zam.ilosc * Druk.cena) as [cena zam.], 'Drukarka' as [Przedmiot zamówienia]
+from Zamowienia as Zam
+join Drukarki as Druk
+on Zam.model = Druk.model
+order by [Przedmiot zamówienia], [cena zam.] desc;
+
+/*3 ile trwa sredni czas realizacji zamowienia*/
+
+
+/*4 o ile dluzszy jest najdluzszy czas realizacji od sredniego czasu realizacji*/
+
+
+/*5 jaki model pc laptopa drukarki jest najczesciej zamawiany w historii*/
+
+
+/*6 jaki model pc laptopa druakrki jest zamawiany w danym miesiacu*/
+*/
