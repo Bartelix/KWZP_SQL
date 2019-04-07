@@ -138,4 +138,4 @@ class SQLInsertsKWZP():
         t = time.localtime(time.time())
         return f'{t[0]}_{t[1]}_{t[2]}_{t[3]}_{t[4]}_{t[5]}'
 
-obj = SQLInsertsKWZP(100, 100, 100)
+obj = SQLInsertsKWZP(30, 30, 30)

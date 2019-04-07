@@ -97,13 +97,13 @@ insert into Drukarki values('EcoTank ITS L3050', 1, 'atramentowa', 699);
 insert into Drukarki values('EcoTank L3070', 1, 'atramentowa', 829);
 insert into Drukarki values('EcoTank 070', 1, 'atramentowa', 829);
 
-/*
+
 /*Dodanie innych rekordów za pomoc¹ innych skryptów*/
 /*:r pe³na œcie¿ka do skryptu*/
-:r C:/Users/Bart³omiej/Desktop/KWZP_SQL/KWZP_SQL/script_inserts_KWZP_2019_4_2_17_5_42.sql
+:r C:/Users/Bart³omiej/Desktop/KWZP_SQL/KWZP_SQL/script_inserts_KWZP_2019_4_7_20_55_0.sql
 /*flag*/
 
-/*===POPRAWNOŒÆ ROZWI¥ZAÑ ZADAÑ NIE ZOSTA£A SPRAWDZONA===*/
+/*
 /*===Zadanie 1===*/
 /*Podaj numer modelu, procesor oraz wielkoœæ dysku twardego ka¿dego PC, który kosztuje poni¿ej 2000z³*/
 select 'Zadanie 1' as 'Numer zad', model, procesor, hdd
@@ -190,6 +190,7 @@ join Laptopy as Lap
 on Prod.model = Lap.model
 group by Prod.producent
 order by Prod.producent;
+*/
 
 /* nazwa firmy ktora kupila, ila ma zaplacic w sumie, data zamowienia, data realizacji inna,
  */
@@ -202,7 +203,9 @@ create table Zamowienia(
 	idZamowienia int identity(1,1) not null primary key,
 	nazwaFirmy nvarchar(50) constraint FK_FirmaZamowienia references Firma(nazwaFirmy) not null,
 	model nvarchar(50) constraint FK_ProduktyZamowienia references Produkty(model) not null,
-	ilosc int not null
+	ilosc int not null,
+	dataZamowienia date not null,
+	dataRealizacji date not null
 	);
 
 insert into Firma values ('KomPol');
@@ -227,8 +230,8 @@ select * from Zamowienia;
 */
 
 /*1 firma ktora zlozyla najwiecej zamowien*/
-select top (1) nazwaFirmy, count(nazwaFirmy) as [Najwiêcej zamówieñ] 
-from Zamowienia 
+select top (1) nazwaFirmy, count(nazwaFirmy) as [Najwiêcej zamówieñ]
+from Zamowienia
 group by nazwaFirmy
 order by [Najwiêcej zamówieñ] desc;
 
@@ -250,13 +253,25 @@ on Zam.model = Druk.model
 order by [Przedmiot zamówienia], [cena zam.] desc;
 
 /*3 ile trwa sredni czas realizacji zamowienia*/
-
+select avg(datediff(day, dataZamowienia, dataRealizacji)) as [Œredni czas realizacji zamówienia]
+from Zamowienia;
 
 /*4 o ile dluzszy jest najdluzszy czas realizacji od sredniego czasu realizacji*/
-
+select max(datediff(day, dataZamowienia, dataRealizacji)) - avg(datediff(day, dataZamowienia, dataRealizacji)) as [Ró¿nica miêdzy najd³u¿szym i œrednim czasem realizacji]
+from Zamowienia
 
 /*5 jaki model pc laptopa drukarki jest najczesciej zamawiany w historii*/
-
+select count(*) as [Iloœæ zamówieñ], Zam.model, Prod.typ as [Przedmiot zamówienia]
+from Zamowienia as Zam
+join Produkty as Prod
+on Zam.model = Prod.model
+group by Prod.typ, Zam.model
+order by [Iloœæ zamówieñ] desc;
 
 /*6 jaki model pc laptopa druakrki jest zamawiany w danym miesiacu*/
-*/
+select Zam.model, Prod.typ
+from Zamowienia as Zam
+join Produkty as Prod
+on Zam.model = Prod.model
+where datepart(month, Zam.dataZamowienia) = 10
+order by Prod.typ;
